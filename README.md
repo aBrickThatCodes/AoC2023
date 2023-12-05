@@ -1,3 +1,8 @@
 # Advent of Code 2023 solutions
-* Days 1-2 -Rust
-* Day 3 - C#
+* **Rust**:
+    * Day 1
+    * Day 2
+* **C#**:
+    * Day 3
+* **Python**:
+    * Day 4
