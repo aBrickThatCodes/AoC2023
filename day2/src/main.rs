@@ -38,7 +38,7 @@ fn part2(input: &str) -> i32 {
 }
 
 fn main() {
-    let input = include_str!("input");
+    let input = include_str!("input").trim();
     println!("Part 1: {}", part1(input));
     println!("Part 2: {}", part2(input));
 }

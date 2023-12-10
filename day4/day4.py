@@ -2,16 +2,16 @@ import os.path
 import re
 
 game_regex = re.compile(r"Card\s+\d+:")
-regex = re.compile(r"(\d+)(?!:)")
+numbers_regex = re.compile(r"(\d+)(?!:)")
 
 
 def get_win_from_card(line) -> int:
     split = line.split("|")
-    winning_numbers = regex.findall(split[1])
+    winning_numbers = numbers_regex.findall(split[1])
     numbers = list(
         filter(
             lambda x: x in winning_numbers,
-            get_numbers(game_regex.sub("", split[0])),
+            numbers_regex.findall(game_regex.sub("", split[0])),
         )
     )
     return len(numbers)
@@ -37,6 +37,7 @@ def part2(lines) -> int:
     return sum(n_copies)
 
 
-lines = open(os.path.join(os.path.dirname(__file__), "input"), "r").readlines()
-print("Part 1:", part1(lines))
-print("Part 2:", part2(lines))
+if __name__ == "__main__":
+    lines = open(os.path.join(os.path.dirname(__file__), "input"), "r").readlines()
+    print("Part 1:", part1(lines))
+    print("Part 2:", part2(lines))
