@@ -4,6 +4,7 @@
     * Day 2
     * Day 5 part 2
     * Day 6
+    * Day 7
 * **C#**:
     * Day 3
 * **Python**:
