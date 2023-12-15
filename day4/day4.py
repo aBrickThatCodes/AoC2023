@@ -38,6 +38,7 @@ def part2(lines) -> int:
 
 
 if __name__ == "__main__":
-    lines = open(os.path.join(os.path.dirname(__file__), "input"), "r").readlines()
+    with open(os.path.join(os.path.dirname(__file__), "input"), "r") as f:
+        lines = f.readlines()
     print("Part 1:", part1(lines))
     print("Part 2:", part2(lines))
