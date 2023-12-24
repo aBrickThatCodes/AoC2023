@@ -8,8 +8,8 @@ fn part1(input: &str) -> i32 {
     let mut prod = 1;
     for (t, s) in input {
         let delta_sqrt = ((t.pow(2) - 4 * s) as f64).sqrt();
-        let beg = ((t as f64 - delta_sqrt) / 2.0) as i32 + 1;
-        let end = ((t as f64 + delta_sqrt) / 2.0) as i32;
+        let beg = ((t as f64 - delta_sqrt) / 2.0).ceil() as i32;
+        let end = ((t as f64 + delta_sqrt) / 2.0).floor() as i32;
         let n = (beg..=end).count() as i32;
         prod *= n;
     }
@@ -29,8 +29,8 @@ fn part2(input: &str) -> i32 {
     let t = input.next().unwrap();
     let s = input.next().unwrap();
     let delta_sqrt = ((t.pow(2) - 4 * s) as f64).sqrt();
-    let beg = ((t as f64 - delta_sqrt) / 2.0) as i32 + 1;
-    let end = ((t as f64 + delta_sqrt) / 2.0) as i32;
+    let beg = ((t as f64 - delta_sqrt) / 2.0).ceil() as i32;
+    let end = ((t as f64 + delta_sqrt) / 2.0).floor() as i32;
     (beg..=end).count() as i32
 }
 
