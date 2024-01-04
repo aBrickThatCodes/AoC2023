@@ -90,8 +90,7 @@ internal static class Program {
         if (!gears.TryGetValue(key, out var gear)) {
             gear = new Gear(n);
             gears.Add(key, gear);
-        }
-        else {
+        } else {
             gear.Degree++;
             if (gear.Degree < 3) gear.Ratio *= n;
             gears[key] = gear;

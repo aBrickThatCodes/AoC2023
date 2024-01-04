@@ -1,17 +1,5 @@
 use regex::Regex;
 
-struct Func {
-    f: Box<dyn Fn(i64) -> i64>,
-}
-
-impl Func {
-    fn new<F>(f: F) -> Self
-    where
-        F: Fn(i64) -> i64 + 'static,
-    {
-        Func { f: Box::new(f) }
-    }
-}
 fn part2(input: &str) -> i64 {
     let seed_regex = Regex::new(r"(\d+)\s+(\d+)").unwrap();
     let map_regex = Regex::new(r"(\d+)\s+(\d+)\s+(\d+)").unwrap();
@@ -36,35 +24,32 @@ fn part2(input: &str) -> i64 {
                 .split('\n')
                 .skip(1)
                 .flat_map(|s| {
-                    map_regex
-                        .captures_iter(s)
-                        .map(|c| {
-                            let (_, [dest, src, range]) = c.extract();
-                            let dest: i64 = dest.parse().unwrap();
-                            let src: i64 = src.parse().unwrap();
-                            let range: i64 = range.parse().unwrap();
-                            (dest, src, range)
-                        })
-                        .collect::<Vec<_>>()
+                    map_regex.captures_iter(s).map(|c| {
+                        let (_, [dest, src, range]) = c.extract();
+                        let dest: i64 = dest.parse().unwrap();
+                        let src: i64 = src.parse().unwrap();
+                        let range: i64 = range.parse().unwrap();
+                        (dest, src, range)
+                    })
                 })
                 .collect::<Vec<_>>();
-            Func::new(move |x: i64| {
-                for (dest, src, range) in maps.iter() {
+            Box::new(move |x: i64| {
+                for (dest, src, range) in &maps {
                     let dist = x - dest;
                     if dist >= 0 && dist < *range {
                         return src + dist;
                     }
                 }
                 x
-            })
+            }) as Box<dyn Fn(i64) -> i64>
         })
-        .reduce(|acc, f| Func::new(move |x| (acc.f)((f.f)(x))))
+        .reduce(|acc, f| Box::new(move |x| acc(f(x))))
         .unwrap();
 
     let mut i = 0;
     loop {
         for (src, range) in seeds.clone() {
-            let var = (mapping.f)(i) - src;
+            let var = mapping(i) - src;
             if var >= 0 && var < range {
                 return i;
             }

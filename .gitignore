@@ -6,3 +6,4 @@ obj
 .idea
 input
 .env
+.editorconfig
